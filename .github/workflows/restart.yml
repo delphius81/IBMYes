@@ -1,0 +1,75 @@
+Skip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@delphius81 
+CCChieh
+/
+IBMYes
+16
+3622.1k
+Code
+Issues
+18
+Pull requests
+15
+Actions
+Projects
+Wiki
+Security
+Insights
+fork后可能没action的解决方法
+master @CCChieh  8512314
+IBM Cloud Auto Restart
+on: schedule
+ ibm-cloud-restart
+IBM Cloud Auto Restart
+This run
+Workflow file
+.github/workflows/ibm.yml
+name: IBM Cloud Auto Restart
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    - cron: '0 12 * * FRI'
+
+jobs:
+  ibm-cloud-restart:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Init
+      run: |
+        chmod -R 777 ./IBM_Cloud_CLI/
+    - name: Login IBM Cloud
+      env:
+        IBM_ACCOUNT: ${{ secrets.IBM_ACCOUNT }}
+        REGION_NUM: ${{ secrets.REGION_NUM }}
+      run: |
+        ./IBM_Cloud_CLI/ibmcloud login <<EOF
+        $IBM_ACCOUNT
+        $REGION_NUM
+        no
+        EOF
+    - name: Target IBM Cloud
+      env:
+        RESOURSE_ID: ${{ secrets.RESOURSE_ID }}
+      run: |
+        ./IBM_Cloud_CLI/ibmcloud target -g "$RESOURSE_ID"
+        ./IBM_Cloud_CLI/ibmcloud target --cf
+        ./IBM_Cloud_CLI/ibmcloud cf install
+    - name: Restart IBM Cloud
+      env:
+        IBM_APP_NAME: ${{ secrets.IBM_APP_NAME }}
+      run: |
+        ./IBM_Cloud_CLI/ibmcloud cf restart "$IBM_APP_NAME"
