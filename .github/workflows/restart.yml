@@ -1,36 +1,3 @@
-Skip to content
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@delphius81 
-CCChieh
-/
-IBMYes
-16
-3622.1k
-Code
-Issues
-18
-Pull requests
-15
-Actions
-Projects
-Wiki
-Security
-Insights
-fork后可能没action的解决方法
-master @CCChieh  8512314
-IBM Cloud Auto Restart
-on: schedule
- ibm-cloud-restart
-IBM Cloud Auto Restart
-This run
-Workflow file
-.github/workflows/ibm.yml
 name: IBM Cloud Auto Restart
 
 on:
